@@ -1,31 +1,27 @@
 import { Component } from '@angular/core';
+import { on } from 'events';
+import { AccuntsService } from './account.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  accounts = [
-    {
-      name: 'Master Account',
-      status: 'active'
-    },
-    {
-      name: 'Testaccount',
-      status: 'inactive'
-    },
-    {
-      name: 'Hidden Account',
-      status: 'unknown'
-    }
-  ];
+  accounts: { name: string; status: string }[] = [];
 
-  onAccountAdded(newAccount: {name: string, status: string}) {
-    this.accounts.push(newAccount);
+  constructor(private accountsService: AccuntsService) { 
+    
   }
 
-  onStatusChanged(updateInfo: {id: number, newStatus: string}) {
-    this.accounts[updateInfo.id].status = updateInfo.newStatus;
+  ngOnInit() { 
+    this.accounts = this.accountsService.accounts
   }
+
 }
+
+
+// Angular Dependecy injector
+// dependency = something our class depends on
+// dependency injector = injects an instance of this class in to our component automatically.
+// we inform angular with a constructor that we need such an instance
